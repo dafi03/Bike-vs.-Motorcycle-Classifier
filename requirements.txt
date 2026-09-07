@@ -1,0 +1,16 @@
+tensorflow==2.16.1
+keras==3.3.3
+
+numpy
+pandas
+matplotlib
+seaborn
+scikit-learn
+
+pillow
+
+jupyter
+notebook
+ipykernel
+
+split-folders==0.5.1
