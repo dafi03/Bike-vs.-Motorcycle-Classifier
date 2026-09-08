@@ -1,69 +1,134 @@
-# Bicycle vs. Motorcycle Image Classification
+# 🚲🏍️ Bicycle vs. Motorcycle Image Classification
 
-**Course:** Neural Network Project Work
-**Authors:** Bächler Domenik, Filippone Dario
-**Date:** 29 May 2026
-**Repository:** [github.zhaw.ch/baechdom/neune_project](https://github.zhaw.ch/baechdom/neune_project)
+![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11-blue?logo=python&logoColor=white)
+![TensorFlow](https://img.shields.io/badge/TensorFlow-2.16-FF6F00?logo=tensorflow&logoColor=white)
+![Keras](https://img.shields.io/badge/Keras-MobileNetV2-D00000?logo=keras&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-lightgrey)
+![Status](https://img.shields.io/badge/Status-Completed-success)
+
+A binary image classifier that distinguishes **bicycles** from **motorcycles**,
+comparing a CNN trained from scratch against transfer learning with
+MobileNetV2. Built as a course project for *Neural Network Project Work* at
+ZHAW.
+
+**Authors:** Domenik Bächler & Dario Filippone
 
 ---
 
-## Project overview
+## 🎯 Motivation
 
-Binary image classifier that distinguishes **bicycles** from **motorcycles**.
-We compare three approaches on the same train / validation / test split:
+Reliably telling motorcyclists and cyclists apart from images is a
+prerequisite for automated helmet-compliance monitoring in traffic (see
+[Kennedy et al., 2022](Paper/s12889-022-13075-2-2.pdf)). This project explores
+how far a small, from-scratch CNN gets on this task, and how much transfer
+learning from a pretrained backbone can improve it.
 
-1. A small **baseline CNN** trained from scratch.
-2. **MobileNetV2** with a frozen ImageNet-pretrained backbone (transfer learning).
-3. The same **MobileNetV2 with the top layers fine-tuned** (final model).
+## 🧠 Approach
 
-Motivation: as discussed in [Kennedy et al. 2022](Paper/s12889-022-13075-2-2.pdf),
-reliable detection of motorcyclists vs. cyclists is a prerequisite for
-helmet-compliance monitoring in traffic.
+Three models were trained and evaluated on the same train/validation/test
+split:
 
-## Results
+| # | Model | Description |
+|---|-------|-------------|
+| 1 | **Baseline CNN** | Small convolutional network trained from scratch |
+| 2 | **MobileNetV2 (frozen)** | ImageNet-pretrained backbone, only a new classification head is trained |
+| 3 | **MobileNetV2 (fine-tuned)** | Same as above, plus the top ~30 backbone layers unfrozen and fine-tuned at a low learning rate |
 
-| Model                    | Test accuracy | Test loss |
-| ------------------------ | ------------- | --------- |
-| Baseline CNN             | 70.5 %        | 0.7369    |
-| MobileNetV2 (frozen)     | 88.5 %        | 0.3484    |
-| MobileNetV2 (fine-tuned) | **90.2 %**    | **0.2363**|
+## 📊 Results
 
-## Dataset
+| Model                    | Test Accuracy | Test Loss |
+| ------------------------ | :-----------: | :-------: |
+| Baseline CNN             |    70.5 %     |  0.7369   |
+| MobileNetV2 (frozen)     |    88.5 %     |  0.3484   |
+| **MobileNetV2 (fine-tuned)** | **90.2 %** | **0.2363** |
 
-Two classes (`bicycle`, `motorcycle`), stored as one folder per class in
-`02_data_clean/`. The notebook re-encodes `.webp` files to JPEG, removes
-files that TensorFlow cannot decode, and splits the data 70 / 15 / 15
-using `splitfolders` with `seed=42`. The raw images are not committed to
-the repository.
+Transfer learning improved test accuracy by **+18 percentage points** over the
+from-scratch baseline, and fine-tuning the backbone added another **+1.6 pp**
+on top of the frozen-backbone model while roughly halving the test loss. All
+numbers are computed on a held-out test set (15 % of the data) that was never
+used during training or model selection — see Section 9 of
+[`project_pipeline.ipynb`](project_pipeline.ipynb) for the evaluation code and
+confusion matrices.
 
-## Project structure
+## 📁 Project structure
 
 ```
 neune_project/
-├── project_pipeline.ipynb   # Main notebook (cleaning, EDA, training, evaluation)
+├── create_dataset.ipynb      # Step 1: merge & clean the two raw Kaggle datasets
+├── project_pipeline.ipynb    # Step 2: EDA, train/val/test split, training, evaluation
+├── requirements.txt
 ├── README.md
-├── Paper/                   # Reference paper (Kennedy et al. 2022)
-├── 02_data_clean/           # Cleaned source images, one folder per class
-└── data_split/              # Auto-generated train/val/test folders
+├── 00_instructions/           # How to download the raw Kaggle datasets
+├── Paper/                     # Reference paper (Kennedy et al., 2022)
+├── 01_data_raw/                # Raw, unzipped Kaggle archives (not committed)
+│   ├── archive (1)/
+│   └── archive (2)/
+├── 02_data_clean/              # Cleaned, de-duplicated images (not committed)
+│   ├── bicycle/
+│   └── motorcycle/
+└── data_split/                 # Auto-generated train/val/test split (not committed)
 ```
 
-## Setup
+> **Note:** `01_data_raw/`, `02_data_clean/` and `data_split/` are excluded via
+> `.gitignore` and are generated locally by running the two notebooks in
+> order — they are not part of this repository.
+
+## 🗂️ Dataset
+
+- Two classes: `bicycle`, `motorcycle`.
+- Combined from two Kaggle datasets (see `00_instructions/` for download
+  links and steps), de-duplicated by file hash, and re-encoded from `.webp`
+  to `.jpg` where needed.
+- Split **70 / 15 / 15** into train / validation / test using
+  [`splitfolders`](https://pypi.org/project/split-folders/) with a fixed seed
+  (`seed=42`) for reproducibility.
+- Raw images are **not** committed to the repository — see setup below.
+
+## 🚀 Setup & reproduction
 
 Requires **Python 3.10 or 3.11**.
 
 ```bash
+# 1. Clone the repository
 git clone https://github.zhaw.ch/baechdom/neune_project.git
 cd neune_project
-python -m venv .venv && source .venv/bin/activate
+
+# 2. Create and activate a virtual environment
+python -m venv .venv
+source .venv/bin/activate      # Windows: .venv\Scripts\activate
+
+# 3. Install dependencies
 pip install -r requirements.txt
-jupyter notebook project_pipeline.ipynb
+
+# 4. Download the raw datasets
+# Follow the instructions in 00_instructions/ to download and unzip the
+# two Kaggle datasets into 01_data_raw/archive (1)/ and archive (2)/.
+
+# 5. Run the notebooks in order
+jupyter notebook create_dataset.ipynb     # builds 02_data_clean/
+jupyter notebook project_pipeline.ipynb   # split, training, evaluation
 ```
 
-## Authors
+Both notebooks use paths that are relative to the repository root and a
+fixed random seed (`42`) throughout, so re-running them from a clean clone
+reproduces the same split and (up to GPU/CPU non-determinism) comparable
+results.
+
+## 🔧 Tech stack
+
+TensorFlow / Keras · MobileNetV2 · NumPy · Pandas · Matplotlib · Pillow ·
+split-folders · Jupyter
+
+## 📄 License
+
+This project is licensed under the MIT License — see [LICENSE](LICENSE) for
+details.
+
+## ✉️ Contact
 
 | Name              | Contact                       |
-| ----------------- | ----------------------------- |
-| Bächler Domenik   | baechdom@students.zhaw.ch     |
-| Filippone Dario   | filipda1@students.zhaw.ch     |
+| ----------------- | ------------------------------ |
+| Domenik Bächler   | baechdom@students.zhaw.ch     |
+| Dario Filippone   | filipda1@students.zhaw.ch     |
 
 Submitted as part of the *Neural Network Project Work* course at ZHAW.
