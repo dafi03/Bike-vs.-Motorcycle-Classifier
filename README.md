@@ -11,7 +11,7 @@ comparing a CNN trained from scratch against transfer learning with
 MobileNetV2. Built as a course project for *Neural Network Project Work* at
 ZHAW.
 
-**Authors:** Domenik Bächler & Dario Filippone
+**Authors:** Dario Filippone & Domenik Bächler
 
 ---
 
