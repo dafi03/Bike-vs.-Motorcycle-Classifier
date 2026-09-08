@@ -47,15 +47,15 @@ from-scratch baseline, and fine-tuning the backbone added another **+1.6 pp**
 on top of the frozen-backbone model while roughly halving the test loss. All
 numbers are computed on a held-out test set (15 % of the data) that was never
 used during training or model selection — see Section 9 of
-[`project_pipeline.ipynb`](project_pipeline.ipynb) for the evaluation code and
+[`project_pipeline.ipynb'](2_project_pipeline.ipynb) for the evaluation code and
 confusion matrices.
 
 ## Project structure
 
 ```
 neune_project/
-├── create_dataset.ipynb      # Step 1: merge & clean the two raw Kaggle datasets
-├── project_pipeline.ipynb    # Step 2: EDA, train/val/test split, training, evaluation
+├── 1_create_dataset.ipynb      # Step 1: merge & clean the two raw Kaggle datasets
+├── 2_project_pipeline.ipynb    # Step 2: EDA, train/val/test split, training, evaluation
 ├── requirements.txt
 ├── README.md
 ├── 00_instructions/           # How to download the raw Kaggle datasets
