@@ -1,4 +1,4 @@
-# 🚲🏍️ Bicycle vs. Motorcycle Image Classification
+# Bicycle vs. Motorcycle Image Classification
 
 ![Python](https://img.shields.io/badge/Python-3.10%20%7C%203.11-blue?logo=python&logoColor=white)
 ![TensorFlow](https://img.shields.io/badge/TensorFlow-2.16-FF6F00?logo=tensorflow&logoColor=white)
@@ -15,7 +15,7 @@ ZHAW.
 
 ---
 
-## 🎯 Motivation
+## Motivation
 
 Reliably telling motorcyclists and cyclists apart from images is a
 prerequisite for automated helmet-compliance monitoring in traffic (see
@@ -23,7 +23,7 @@ prerequisite for automated helmet-compliance monitoring in traffic (see
 how far a small, from-scratch CNN gets on this task, and how much transfer
 learning from a pretrained backbone can improve it.
 
-## 🧠 Approach
+## Approach
 
 Three models were trained and evaluated on the same train/validation/test
 split:
@@ -34,7 +34,7 @@ split:
 | 2 | **MobileNetV2 (frozen)** | ImageNet-pretrained backbone, only a new classification head is trained |
 | 3 | **MobileNetV2 (fine-tuned)** | Same as above, plus the top ~30 backbone layers unfrozen and fine-tuned at a low learning rate |
 
-## 📊 Results
+## Results
 
 | Model                    | Test Accuracy | Test Loss |
 | ------------------------ | :-----------: | :-------: |
@@ -50,7 +50,7 @@ used during training or model selection — see Section 9 of
 [`project_pipeline.ipynb`](project_pipeline.ipynb) for the evaluation code and
 confusion matrices.
 
-## 📁 Project structure
+## Project structure
 
 ```
 neune_project/
@@ -73,7 +73,7 @@ neune_project/
 > `.gitignore` and are generated locally by running the two notebooks in
 > order — they are not part of this repository.
 
-## 🗂️ Dataset
+## Dataset
 
 - Two classes: `bicycle`, `motorcycle`.
 - Combined from two Kaggle datasets (see `00_instructions/` for download
@@ -84,7 +84,7 @@ neune_project/
   (`seed=42`) for reproducibility.
 - Raw images are **not** committed to the repository — see setup below.
 
-## 🚀 Setup & reproduction
+## Setup & reproduction
 
 Requires **Python 3.10 or 3.11**.
 
@@ -114,17 +114,17 @@ fixed random seed (`42`) throughout, so re-running them from a clean clone
 reproduces the same split and (up to GPU/CPU non-determinism) comparable
 results.
 
-## 🔧 Tech stack
+## Tech stack
 
 TensorFlow / Keras · MobileNetV2 · NumPy · Pandas · Matplotlib · Pillow ·
 split-folders · Jupyter
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License — see [LICENSE](LICENSE) for
 details.
 
-## ✉️ Contact
+## Contact
 
 | Name              | Contact                       |
 | ----------------- | ------------------------------ |
