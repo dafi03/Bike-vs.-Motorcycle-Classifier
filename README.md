@@ -47,7 +47,7 @@ from-scratch baseline, and fine-tuning the backbone added another **+1.6 pp**
 on top of the frozen-backbone model while roughly halving the test loss. All
 numbers are computed on a held-out test set (15 % of the data) that was never
 used during training or model selection — see Section 9 of
-[`project_pipeline.ipynb'](2_project_pipeline.ipynb) for the evaluation code and
+
 confusion matrices.
 
 ## Project structure
