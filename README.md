@@ -90,8 +90,8 @@ Requires **Python 3.10 or 3.11**.
 
 ```bash
 # 1. Clone the repository
-git clone https://github.zhaw.ch/baechdom/neune_project.git
-cd neune_project
+git clone https://github.com/dafi03/CNN.git
+cd CNN
 
 # 2. Create and activate a virtual environment
 python -m venv .venv
@@ -105,8 +105,8 @@ pip install -r requirements.txt
 # two Kaggle datasets into 01_data_raw/archive (1)/ and archive (2)/.
 
 # 5. Run the notebooks in order
-jupyter notebook create_dataset.ipynb     # builds 02_data_clean/
-jupyter notebook project_pipeline.ipynb   # split, training, evaluation
+jupyter notebook 1_create_dataset.ipynb     # builds 02_data_clean/
+jupyter notebook 2_project_pipeline.ipynb   # split, training, evaluation
 ```
 
 Both notebooks use paths that are relative to the repository root and a
